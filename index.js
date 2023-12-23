@@ -12,12 +12,15 @@ mongoose.connect(process.env.MONGO_URL).then(()=>console.log("db connected")).ca
 
 
 const computerQA = require('./routes/computerRoutes');
+const electronicsQA = require('./routes/electronicsRoutes');
+
 
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended :true}));
 app.use('/computer',computerQA);
+app.use('/electronics',electronicsQA);
 app.use("/hello", (req, res)=>{
     res.send("Hello")
 });
