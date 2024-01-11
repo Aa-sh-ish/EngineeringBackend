@@ -23,24 +23,14 @@ module.exports = {
 
     getRandomMcqs: async (req, res) => {
         try {
-          // Retrieve all MCQs from the collection
           const allMcqs = await Mcq.find();
-      
-          // Shuffle the array in-place using Fisher-Yates shuffle algorithm
           for (let i = allMcqs.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [allMcqs[i], allMcqs[j]] = [allMcqs[j], allMcqs[i]];
           }
-      
-          // Send the shuffled MCQs as the response
           res.status(200).json(allMcqs);
         } catch (error) {
           res.status(500).json({ status: false, message: error.message });
         }
       }
-      
-      
-      // Fisher-Yates shuffle algorithm to shuffle the array
-
-      
 }
