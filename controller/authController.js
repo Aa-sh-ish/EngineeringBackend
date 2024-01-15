@@ -5,21 +5,24 @@ module.exports = {
     createUser : async (req,res)=>{
         const user = req.body;
         try {
-            await User.findOne(user.email);
+            email = user.email
+         finduser =   await User.findOne({email});
+         if (!finduser) {
+            console.log("Here");
+            const newUser = new User({
+                username : user.username,
+                email: user.email,
+
+                password: CryptoJS.AES.encrypt(user.password,process.env.SECRET).toString(),
+                userType :user.userType
+            })
+            await newUser.save();
+       return  res.status(201).json({status:true})
+         }
             res.status(400).json({message:"Email already Registered"})
         } catch (error) {
-                try {
-                    const newUser = new User({
-                        username : user.username,
-                        email: user.email,
-                        password: CryptoJS.AES.encrypt(user.password,process.env.SECRET).toString(),
-                        userType :user.userType
-                    })
-                    await newUser.save();
-                    res.status(201).json({status:true})
-                } catch (error) {
-                    res.status(500).json({status:false, message :error.message})
-                }
+            res.status(500).json({status:false, error :error.message})
+
         }
     },
 
