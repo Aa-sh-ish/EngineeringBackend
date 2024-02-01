@@ -8,7 +8,6 @@ module.exports = {
             email = user.email
          finduser =   await User.findOne({email});
          if (!finduser) {
-            console.log("Here");
             const newUser = new User({
                 username : user.username,
                 email: user.email,

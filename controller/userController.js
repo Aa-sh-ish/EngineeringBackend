@@ -12,7 +12,7 @@ module.exports={
     },
 
     deleteUser: async(req,res)=>{
-        const userId = req.user.id;
+        const userId = req.params.id;
         try {
             await User.findByIdAndDelete(userId)
             res.status(200).json({status:true,message:"User Deleted Successfully "})
