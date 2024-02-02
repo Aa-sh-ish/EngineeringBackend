@@ -12,7 +12,7 @@ module.exports={
     },
 
     deleteUser: async(req,res)=>{
-        const userId = req.params.id;
+        const userId = req.user.id;
         try {
             await User.findByIdAndDelete(userId)
             res.status(200).json({status:true,message:"User Deleted Successfully "})
@@ -30,6 +30,4 @@ module.exports={
             res.status(500).json({message:"Error Updating User",error:error.message})
         }
     }
-
-    
 }
