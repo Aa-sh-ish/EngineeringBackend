@@ -34,6 +34,7 @@ module.exports = {
 
             const decryptedPassword = CryptoJS.AES.decrypt(user.password,process.env.SECRET)
             const decrypted = decryptedPassword.toString(CryptoJS.enc.Utf8);
+            console.log(decrypted);
             if (decrypted!=req.body.password) { 
                return res.status(401).json({message:"Wrong Password"})
             }

@@ -24,12 +24,13 @@ module.exports={
 
     updateUserPassword: async (req, res) => {
         const {email, newPassword} = req.body;
+        console.log(newPassword);
         try {
             const user = await User.findOne({email: email});
             if (!user) {
                 return res.status(404).json({message: "User not Exist Please resister"});
             }
-
+            
             const encryptedNewPassword = CryptoJS.AES.encrypt(newPassword, process.env.SECRET).toString();
 
             user.password = encryptedNewPassword;
