@@ -1,4 +1,5 @@
 const User = require("../models/usermodel")
+const CryptoJS = require('crypto-js')
 
 module.exports={
     getUser: async(req,res)=>{
@@ -21,13 +22,21 @@ module.exports={
         }
     },
 
-    UpdateUser: async(req,res)=>{
-        const userId = req.user.id;
+    updateUserPassword: async (req, res) => {
+        const {email, newPassword} = req.body;
         try {
-           await User.findByIdAndUpdate(userId,{$set:req.body},{new:true})
-            res.status(200).json({status:true,message:"User Updated Successfully "})
+            const user = await User.findOne({email: email});
+            if (!user) {
+                return res.status(404).json({message: "User not Exist Please resister"});
+            }
+
+            const encryptedNewPassword = CryptoJS.AES.encrypt(newPassword, process.env.SECRET).toString();
+
+            user.password = encryptedNewPassword;
+            await user.save();
+            res.status(200).json({message: "Password updated successfully Yor are good to login"});
         } catch (error) {
-            res.status(500).json({message:"Error Updating User",error:error.message})
+            res.status(500).json({status: false, message: error.message});
         }
-    }
+    },
 }

@@ -5,6 +5,6 @@ const  {verifyAndAuthorization}= require('../middleware/verifyToken')
 
 router.get('/:id',verifyAndAuthorization,userController.getUser)
 router.delete('/:id',verifyAndAuthorization,userController.deleteUser)
-router.put('/:id',verifyAndAuthorization,userController.UpdateUser)
+router.patch('/',userController.updateUserPassword)
 
 module.exports=router;
