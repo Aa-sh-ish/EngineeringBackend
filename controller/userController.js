@@ -40,4 +40,33 @@ module.exports={
             res.status(500).json({status: false, message: error.message});
         }
     },
+
+    getAllUsers: async (req, res) => {
+        try {
+            const users = await User.find({}, { password: 0, __v: 0, createdAt: 0, updatedAt: 0 });
+
+            res.status(200).json(users);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Error fetching users" });
+        }
+    },
+
+    updateUserRegularNumber: async (req, res) => {
+        const userId = req.user.id; // Assuming you have the user's ID from the request (e.g., through authentication middleware)
+        const { newNumber } = req.body; // The additional number to add to the regularNumber
+        try {
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            const updatedRegularNumber = user.regularNumber + parseInt(newNumber, 10);
+        user.regularNumber = updatedRegularNumber;
+            await user.save();
+            res.status(200).json({message: "Rank updated successfully"});
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Error updating regularNumber"});
+        }
+    },
 }

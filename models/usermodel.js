@@ -38,6 +38,10 @@ const UserSchema = new mongoose.Schema({
     monlhlyNumber:{
         type: Number,
         default:0,
+    },
+    regularNumber:{
+        type:Number,
+        default:0,
     }
 },
 {timestamps:true});
