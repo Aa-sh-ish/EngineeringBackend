@@ -1,4 +1,4 @@
-const Mcq = require('../models/electronicsmodel');
+const Mcq = require('../models/civilQAmodel');
 module.exports = {
     createMcq : async (req,res)=>{
         const mcq = req.body;

@@ -13,7 +13,9 @@ const authRouter = require('./routes/authRoute')
 const userRouter = require('./routes/userRoute')
 const computerQA = require('./routes/computerRoutes');
 const electronicsQA = require('./routes/electronicsRoutes');
+const civilQA = require("./routes/civilRoutes");
 const rankRouter = require('./routes/userRanks');
+
 
 
 
@@ -25,6 +27,7 @@ app.use('/',authRouter);
 app.use('/api/users',userRouter);
 app.use('/computer',computerQA);
 app.use('/electronics',electronicsQA);
+app.use('/civil',civilQA);
 app.use('/aip/ranks',rankRouter);
 app.use("/hello", (req, res)=>{
     res.send("Hello")
